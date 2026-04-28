@@ -491,6 +491,27 @@
   transition: color 0.2s;
 }
 .close-modal:hover { color: var(--accent); }
+  /* Certificate Modal */
+.cert-card { cursor: pointer; transition: transform 0.2s; }
+.cert-card:hover { transform: scale(1.02); }
+.modal-overlay {
+  display: none;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 2000;
+  justify-content: center; align-items: center;
+}
+.modal-content {
+  max-width: 90%; max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+  border: 2px solid var(--accent);
+}
+.close-modal {
+  position: absolute; top: 20px; right: 30px;
+  color: #fff; font-size: 40px; font-weight: bold; cursor: pointer;
+}
+.close-modal:hover { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -775,33 +796,19 @@
       </div>
       <div class="certs-grid">
         
-        <!-- 1-sertifikat: Rasm nomini o'zgartiring -->
-        <div class="cert-card reveal" onclick="openModal('sertifikat1.png')">
-          <div class="cert-title">Python for Data Science</div>
-          <div class="cert-org">Coursera / IBM</div>
-          <div class="cert-date">2024</div>
-        </div>
+        <!-- 1-sertifikat -->
+<div class="cert-card reveal" onclick="openModal('sertifikat1.png')">
+  <div class="cert-title">Python for Data Science</div>
+  <div class="cert-org">Coursera / IBM</div>
+  <div class="cert-date">2024</div>
+</div>
 
-        <!-- 2-sertifikat: Rasm nomini o'zgartiring -->
-        <div class="cert-card reveal" onclick="openModal('sertifikat2.png')">
-          <div class="cert-title">BIM Manager</div>
-          <div class="cert-org">Autodesk / Revit</div>
-          <div class="cert-date">2023</div>
-        </div>
-
-        <!-- 3-sertifikat: Rasm nomini o'zgartiring -->
-        <div class="cert-card reveal" onclick="openModal('sertifikat3.png')">
-          <div class="cert-title">Advanced Excel</div>
-          <div class="cert-org">Udemy</div>
-          <div class="cert-date">2023</div>
-        </div>
-
-        <!-- 4-sertifikat: Rasm nomini o'zgartiring -->
-        <div class="cert-card reveal" onclick="openModal('sertifikat4.png')">
-          <div class="cert-title">English Language (B2)</div>
-          <div class="cert-org">IELTS / CEFR</div>
-          <div class="cert-date">2022</div>
-        </div>
+<!-- 2-sertifikat -->
+<div class="cert-card reveal" onclick="openModal('sertifikat2.png')">
+  <div class="cert-title">BIM Manager</div>
+  <div class="cert-org">Autodesk / Revit</div>
+  <div class="cert-date">2023</div>
+</div>
 
       </div>
     </section>
@@ -1026,32 +1033,23 @@
       document.documentElement.lang = lang;
     });
   </script>
-  <!-- Modal Popup HTML -->
-  <div id="certModal" class="modal-overlay" onclick="closeModal()">
-    <span class="close-modal" onclick="closeModal()">&times;</span>
-    <img class="modal-content" id="modalImage">
-  </div>
+  <!-- Modal Popup -->
+<div id="certModal" class="modal-overlay" onclick="closeModal()">
+  <span class="close-modal" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImage">
+</div>
 
-  <!-- JavaScript Logic -->
-  <script>
-    function openModal(imageName) {
-      const modal = document.getElementById('certModal');
-      const modalImg = document.getElementById('modalImage');
-      modal.style.display = "flex";
-      modalImg.src = imageName;
-    }
-
-    function closeModal() {
-      const modal = document.getElementById('certModal');
-      modal.style.display = "none";
-    }
-    
-    // Esc tugmasini bosganda ham yopish uchun
-    document.addEventListener('keydown', function(event) {
-      if (event.key === "Escape") {
-        closeModal();
-      }
-    });
-  </script>
+<script>
+function openModal(imageName) {
+  document.getElementById('certModal').style.display = "flex";
+  document.getElementById('modalImage').src = imageName;
+}
+function closeModal() {
+  document.getElementById('certModal').style.display = "none";
+}
+document.addEventListener('keydown', function(event) {
+  if (event.key === "Escape") closeModal();
+});
+</script>
 </body>
 </html>
