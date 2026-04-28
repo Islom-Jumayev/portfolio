@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Islom — Muhandis & Texnolog</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <!-- 🔴 GOOGLE ANALYTICS O'RNI: Quyidagi skriptni o'zingiznikiga almashtiring -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  </script> -->
+  <!-- 🔴 GOOGLE ANALYTICS O'RNI TUGADI -->
+
   <style>
     :root {
       --bg: #0a0f0d;
@@ -17,6 +28,18 @@
       --highlight: #c8f5d8;
     }
 
+    /* Light Mode Variables */
+    [data-theme="light"] {
+      --bg: #f5f9f6;
+      --surface: #ffffff;
+      --border: #e0e8e2;
+      --accent: #2cb66d;
+      --accent2: #5ac48a;
+      --text: #1a2e20;
+      --muted: #5c7a66;
+      --highlight: #0a2e18;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html { scroll-behavior: smooth; }
@@ -27,13 +50,14 @@
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
     }
 
     /* ── Grain overlay ── */
     body::before {
       content: '';
       position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 9999;
       opacity: 0.5;
@@ -62,23 +86,27 @@
     @keyframes orb1 { from { transform: translate(0,0) scale(1); } to { transform: translate(40px, 60px) scale(1.1); } }
     @keyframes orb2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-30px, -50px) scale(1.15); } }
 
-    /* ── Nav ── */
+    /* ─ Nav ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.4rem 3rem;
-      background: rgba(10,15,13,0.7);
+      padding: 1rem 3rem;
+      background: rgba(10,15,13,0.85);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
+    [data-theme="light"] nav { background: rgba(245,249,246,0.85); }
+
     .nav-logo {
       font-family: 'Space Mono', monospace;
       font-size: 0.85rem;
       color: var(--accent);
       letter-spacing: 0.1em;
     }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+    .nav-center { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
@@ -89,9 +117,35 @@
     }
     .nav-links a:hover { color: var(--accent); }
 
-    /* ── Sections wrapper ── */
-    main { position: relative; z-index: 1; }
+    /* Controls (Theme + Lang) */
+    .nav-controls { display: flex; align-items: center; gap: 1rem; }
+    
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); }
 
+    .lang-select {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      outline: none;
+    }
+    .lang-select option { background: var(--surface); color: var(--text); }
+
+    /* ─ Sections wrapper ── */
+    main { position: relative; z-index: 1; }
     section { padding: 7rem 3rem; max-width: 1100px; margin: 0 auto; }
 
     /* ── Hero ─ */
@@ -184,7 +238,6 @@
       opacity: 0;
       animation: fadeUp 0.9s 1.0s forwards;
     }
-    .stat-item {}
     .stat-num {
       font-family: 'Space Mono', monospace;
       font-size: 2rem;
@@ -244,22 +297,9 @@
       transition: border-color 0.2s;
     }
     .highlight-card:hover { border-color: rgba(61,220,132,0.4); }
-    .highlight-icon {
-      font-size: 1.4rem;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-    .highlight-title {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--text);
-      margin-bottom: 0.25rem;
-    }
-    .highlight-desc {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .highlight-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .highlight-title { font-weight: 600; font-size: 0.9rem; color: var(--text); margin-bottom: 0.25rem; }
+    .highlight-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
 
     /* ── Skills ── */
     #skills { border-top: 1px solid var(--border); }
@@ -279,8 +319,7 @@
     }
     .skill-card::before {
       content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
+      position: absolute; top: 0; left: 0; right: 0;
       height: 2px;
       background: linear-gradient(90deg, var(--accent), transparent);
       opacity: 0;
@@ -289,16 +328,8 @@
     .skill-card:hover { transform: translateY(-4px); border-color: rgba(61,220,132,0.3); }
     .skill-card:hover::before { opacity: 1; }
     .skill-card-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .skill-card-title {
-      font-weight: 600;
-      font-size: 1rem;
-      margin-bottom: 0.75rem;
-      color: var(--highlight);
-    }
-    .skill-tags {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-      margin-top: 1rem;
-    }
+    .skill-card-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.75rem; color: var(--highlight); }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
     .skill-tag {
       font-family: 'Space Mono', monospace;
       font-size: 0.68rem;
@@ -318,48 +349,14 @@
       gap: 0 2rem;
       position: relative;
     }
-    .timeline-year {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--accent);
-      padding-top: 0.3rem;
-      text-align: right;
-    }
-    .timeline-line {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .timeline-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
-      margin-top: 0.45rem;
-      box-shadow: 0 0 0 4px rgba(61,220,132,0.15);
-    }
-    .timeline-connector {
-      width: 1px;
-      flex: 1;
-      background: var(--border);
-      min-height: 40px;
-    }
-    .timeline-content {
-      padding-bottom: 3rem;
-    }
+    .timeline-year { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--accent); padding-top: 0.3rem; text-align: right; }
+    .timeline-line { display: flex; flex-direction: column; align-items: center; }
+    .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 0.45rem; box-shadow: 0 0 0 4px rgba(61,220,132,0.15); }
+    .timeline-connector { width: 1px; flex: 1; background: var(--border); min-height: 40px; }
+    .timeline-content { padding-bottom: 3rem; }
     .timeline-item:last-child .timeline-connector { display: none; }
-    .timeline-degree {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem;
-      color: var(--highlight);
-      margin-bottom: 0.3rem;
-    }
-    .timeline-school {
-      font-size: 0.85rem;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
+    .timeline-degree { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--highlight); margin-bottom: 0.3rem; }
+    .timeline-school { font-size: 0.85rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem; }
     .timeline-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
 
     /* ── Projects ── */
@@ -380,40 +377,35 @@
       cursor: default;
     }
     .project-card:hover { transform: translateY(-4px); border-color: rgba(61,220,132,0.35); }
-    .project-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: rgba(61,220,132,0.4);
-      letter-spacing: 0.2em;
-      margin-bottom: 1rem;
-    }
-    .project-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.35rem;
-      color: var(--highlight);
-      margin-bottom: 0.75rem;
-      line-height: 1.2;
-    }
+    .project-num { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: rgba(61,220,132,0.4); letter-spacing: 0.2em; margin-bottom: 1rem; }
+    .project-title { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: var(--highlight); margin-bottom: 0.75rem; line-height: 1.2; }
     .project-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
-    .project-footer {
-      margin-top: 1.5rem;
-      display: flex; align-items: center; justify-content: space-between;
+    .project-footer { margin-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .project-status { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--accent); font-family: 'Space Mono', monospace; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    /* ── CERTIFICATES (New) ── */
+    #certificates { border-top: 1px solid var(--border); }
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
     }
-    .project-status {
-      display: flex; align-items: center; gap: 0.4rem;
-      font-size: 0.75rem; color: var(--accent);
-      font-family: 'Space Mono', monospace;
+    .cert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: transform 0.2s, border-color 0.2s;
     }
-    .status-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    .cert-card:hover { transform: translateY(-4px); border-color: rgba(61,220,132,0.3); }
+    .cert-title { font-weight: 600; color: var(--text); font-size: 1rem; }
+    .cert-org { color: var(--accent); font-size: 0.85rem; }
+    .cert-date { color: var(--muted); font-size: 0.75rem; font-family: 'Space Mono', monospace; }
 
     /* ── Contact ─ */
     #contact { border-top: 1px solid var(--border); text-align: center; padding-bottom: 8rem; }
@@ -429,12 +421,8 @@
     }
     .contact-email::after {
       content: '';
-      position: absolute;
-      bottom: -4px; left: 0; right: 0;
-      height: 1px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transition: transform 0.3s;
+      position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--accent); transform: scaleX(0); transition: transform 0.3s;
     }
     .contact-email:hover { color: var(--accent); }
     .contact-email:hover::after { transform: scaleX(1); }
@@ -446,8 +434,7 @@
       border: 1px solid var(--border);
       color: var(--muted);
       text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 500;
+      font-size: 0.8rem; font-weight: 500;
       transition: border-color 0.2s, color 0.2s;
       white-space: nowrap;
     }
@@ -465,20 +452,14 @@
     }
 
     /* ── Scroll reveal ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ── Responsive ─ */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
+      .nav-center { display: none; } /* Mobile menu simplified */
+      .nav-controls { margin-left: auto; }
       section { padding: 5rem 1.5rem; }
       #hero { padding-left: 1.5rem; padding-right: 1.5rem; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -497,44 +478,58 @@
   <!-- NAV -->
   <nav>
     <div class="nav-logo">ISLOM.DEV</div>
-    <ul class="nav-links">
-      <li><a href="#about">Haqimda</a></li>
-      <li><a href="#skills">Ko'nikmalar</a></li>
-      <li><a href="#education">Ta'lim</a></li>
-      <li><a href="#projects">Loyihalar</a></li>
-      <li><a href="#contact">Aloqa</a></li>
-    </ul>
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="#about" data-i18n="nav_about">Haqimda</a></li>
+        <li><a href="#skills" data-i18n="nav_skills">Ko'nikmalar</a></li>
+        <li><a href="#education" data-i18n="nav_education">Ta'lim</a></li>
+        <li><a href="#projects" data-i18n="nav_projects">Loyihalar</a></li>
+        <li><a href="#certificates" data-i18n="nav_certificates">Sertifikatlar</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Aloqa</a></li>
+      </ul>
+    </div>
+    <div class="nav-controls">
+      <select class="lang-select" id="langSelect">
+        <option value="uz">UZ</option>
+        <option value="en">EN</option>
+        <option value="ru">RU</option>
+      </select>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+        <!-- Sun/Moon icon will be injected by JS -->
+        ☀️
+      </button>
+    </div>
   </nav>
 
   <main>
 
     <!-- HERO -->
     <section id="hero">
-      <div class="hero-tag">Muhandis · Texnolog · Tadqiqotchi</div>
+      <div class="hero-tag" data-i18n="hero_tag">Muhandis · Texnolog · Tadqiqotchi</div>
       <h1 class="hero-name">Islom<br><em>Jumayev</em></h1>
-      <p class="hero-subtitle">
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
         Suv ta'minoti muhandisligi bo'yicha magistr. Texnologiya, ma'lumotlar tahlili va raqamli yechimlar bilan suv infratuzilmasini zamonaviylashtiraman.
       </p>
       <div class="hero-cta">
-        <a href="#projects" class="btn-primary">Loyihalarni ko'rish</a>
-        <a href="#contact" class="btn-secondary">Bog'lanish</a>
+        <a href="#projects" class="btn-primary" data-i18n="hero_cta_projects">Loyihalarni ko'rish</a>
+        <a href="#contact" class="btn-secondary" data-i18n="hero_cta_contact">Bog'lanish</a>
       </div>
       <div class="hero-stats">
         <div class="stat-item">
           <div class="stat-num">5+</div>
-          <div class="stat-label">Yil tajriba</div>
+          <div class="stat-label" data-i18n="stat_exp">Yil tajriba</div>
         </div>
         <div class="stat-item">
           <div class="stat-num">2</div>
-          <div class="stat-label">Oliy ta'lim</div>
+          <div class="stat-label" data-i18n="stat_edu">Oliy ta'lim</div>
         </div>
         <div class="stat-item">
           <div class="stat-num">G'uzor</div>
-          <div class="stat-label">Dissertatsiya hududi</div>
+          <div class="stat-label" data-i18n="stat_area">Dissertatsiya hududi</div>
         </div>
         <div class="stat-item">
           <div class="stat-num">∞</div>
-          <div class="stat-label">O'rganish ishtiyoqi</div>
+          <div class="stat-label" data-i18n="stat_learn">O'rganish ishtiyoqi</div>
         </div>
       </div>
     </section>
@@ -542,42 +537,42 @@
     <!-- ABOUT -->
     <section id="about">
       <div class="reveal">
-        <div class="section-label">// 01 — Haqimda</div>
-        <h2 class="section-title">Muhandislik va<br>texnologiyani birlashtiruvchi</h2>
+        <div class="section-label" data-i18n="about_label">// 01 — Haqimda</div>
+        <h2 class="section-title" data-i18n="about_title">Muhandislik va<br>texnologiyani birlashtiruvchi</h2>
       </div>
       <div class="about-grid reveal">
         <div class="about-text">
-          <p>Men <span>TIQXMMI (Toshkent irrigatsiya va qishloq xo'jaligini mexanizatsiyalashtirish muhandislari instituti)</span>da suv ta'minoti muhandisligi tizimlari yo'nalishi bo'yicha magistratura talabasi bo'lib, tez orada dissertatsiyamni yakunlayman.</p>
-          <p>Texnologiyaga bo'lgan qiziqishim meni muhandislikdan tashqariga olib chiqdi — <span>BIM modellashtirish (Revit), UI/UX dizayn (Figma), Python va ma'lumotlar tahlili</span> sohalari meni o'ziga tortmoqda.</p>
-          <p>G'uzor tumanidagi suv olish tizimini optimallashtirish bo'yicha magistrlik dissertatsiyam real ma'lumotlar va texnologik yechimlarni birlashtirgan amaliy tadqiqot hisoblanadi.</p>
+          <p data-i18n="about_p1">Men <span>TIQXMMI (Toshkent irrigatsiya va qishloq xo'jaligini mexanizatsiyalashtirish muhandislari instituti)</span>da suv ta'minoti muhandisligi tizimlari yo'nalishi bo'yicha magistratura talabasi bo'lib, tez orada dissertatsiyamni yakunlayman.</p>
+          <p data-i18n="about_p2">Texnologiyaga bo'lgan qiziqishim meni muhandislikdan tashqariga olib chiqdi — <span>BIM modellashtirish (Revit), UI/UX dizayn (Figma), Python va ma'lumotlar tahlili</span> sohalari meni o'ziga tortmoqda.</p>
+          <p data-i18n="about_p3">G'uzor tumanidagi suv olish tizimini optimallashtirish bo'yicha magistrlik dissertatsiyam real ma'lumotlar va texnologik yechimlarni birlashtirgan amaliy tadqiqot hisoblanadi.</p>
         </div>
         <div class="about-highlights">
           <div class="highlight-card">
             <div class="highlight-icon">💧</div>
             <div>
-              <div class="highlight-title">Ichimlik suvi tizimlari</div>
-              <div class="highlight-desc">Suv ta'minoti loyihalash, nasos stansiyalari, quvurlar tarmog'i hisob-kitoblari bo'yicha chuqur bilim.</div>
+              <div class="highlight-title" data-i18n="hl_water">Ichimlik suvi tizimlari</div>
+              <div class="highlight-desc" data-i18n="hl_water_desc">Suv ta'minoti loyihalash, nasos stansiyalari, quvurlar tarmog'i hisob-kitoblari bo'yicha chuqur bilim.</div>
             </div>
           </div>
           <div class="highlight-card">
-            <div class="highlight-icon">🖥️</div>
+            <div class="highlight-icon">️</div>
             <div>
-              <div class="highlight-title">Texnologiya & Dasturlash</div>
-              <div class="highlight-desc">Python, ma'lumotlar tahlili, Excel vizualizatsiya, va raqamli loyihalash asboblari.</div>
+              <div class="highlight-title" data-i18n="hl_tech">Texnologiya & Dasturlash</div>
+              <div class="highlight-desc" data-i18n="hl_tech_desc">Python, ma'lumotlar tahlili, Excel vizualizatsiya, va raqamli loyihalash asboblari.</div>
             </div>
           </div>
           <div class="highlight-card">
             <div class="highlight-icon">📚</div>
             <div>
-              <div class="highlight-title">Doimiy o'rganish</div>
-              <div class="highlight-desc">Shaxsiy rivojlanish, psixologiya, moliya va texnologiya sohalari bo'yicha keng kitobxon.</div>
+              <div class="highlight-title" data-i18n="hl_learn">Doimiy o'rganish</div>
+              <div class="highlight-desc" data-i18n="hl_learn_desc">Shaxsiy rivojlanish, psixologiya, moliya va texnologiya sohalari bo'yicha keng kitobxon.</div>
             </div>
           </div>
           <div class="highlight-card">
             <div class="highlight-icon">🌐</div>
             <div>
-              <div class="highlight-title">Ko'p tilli mutaxassis</div>
-              <div class="highlight-desc">O'zbek, Ingliz va Rus tillarida kasbiy muloqot va hujjatlashtirish tajribasi.</div>
+              <div class="highlight-title" data-i18n="hl_lang">Ko'p tilli mutaxassis</div>
+              <div class="highlight-desc" data-i18n="hl_lang_desc">O'zbek, Ingliz va Rus tillarida kasbiy muloqot va hujjatlashtirish tajribasi.</div>
             </div>
           </div>
         </div>
@@ -587,14 +582,14 @@
     <!-- SKILLS -->
     <section id="skills">
       <div class="reveal">
-        <div class="section-label">// 02 — Ko'nikmalar</div>
-        <h2 class="section-title">Texnik va kasbiy<br>qobiliyatlar</h2>
+        <div class="section-label" data-i18n="skills_label">// 02 — Ko'nikmalar</div>
+        <h2 class="section-title" data-i18n="skills_title">Texnik va kasbiy<br>qobiliyatlar</h2>
       </div>
       <div class="skills-grid">
         <div class="skill-card reveal">
           <div class="skill-card-icon">⚙️</div>
-          <div class="skill-card-title">Muhandislik</div>
-          <div class="skill-desc">Suv ta'minoti tarmoqlarini loyihalash, gidravlik hisob-kitoblar, suv olish inshoatlari, nasos stansiyalari va infratuzilma optimallashtirish.</div>
+          <div class="skill-card-title" data-i18n="sk_eng">Muhandislik</div>
+          <div class="skill-desc" data-i18n="sk_eng_desc">Suv ta'minoti tarmoqlarini loyihalash, gidravlik hisob-kitoblar, suv olish inshoatlari, nasos stansiyalari va infratuzilma optimallashtirish.</div>
           <div class="skill-tags">
             <span class="skill-tag">Gidravlika</span>
             <span class="skill-tag">Suv taqsimoti</span>
@@ -604,8 +599,8 @@
         </div>
         <div class="skill-card reveal">
           <div class="skill-card-icon">📊</div>
-          <div class="skill-card-title">Ma'lumotlar tahlili</div>
-          <div class="skill-desc">Excel'da murakkab vizualizatsiya, ma'lumotlar tozalash va statistik tahlil. Python orqali avtomatlashtirilgan hisobotlar.</div>
+          <div class="skill-card-title" data-i18n="sk_data">Ma'lumotlar tahlili</div>
+          <div class="skill-desc" data-i18n="sk_data_desc">Excel'da murakkab vizualizatsiya, ma'lumotlar tozalash va statistik tahlil. Python orqali avtomatlashtirilgan hisobotlar.</div>
           <div class="skill-tags">
             <span class="skill-tag">Python</span>
             <span class="skill-tag">Excel</span>
@@ -615,8 +610,8 @@
         </div>
         <div class="skill-card reveal">
           <div class="skill-card-icon">🏗️</div>
-          <div class="skill-card-title">BIM Modellashtirish</div>
-          <div class="skill-desc">Revit yordamida binolar va infratuzilma ob'ektlarining 3D modellari, qurilish hujjatlashtirish va koordinatsiya.</div>
+          <div class="skill-card-title" data-i18n="sk_bim">BIM Modellashtirish</div>
+          <div class="skill-desc" data-i18n="sk_bim_desc">Revit yordamida binolar va infratuzilma ob'ektlarining 3D modellari, qurilish hujjatlashtirish va koordinatsiya.</div>
           <div class="skill-tags">
             <span class="skill-tag">Revit</span>
             <span class="skill-tag">BIM</span>
@@ -625,8 +620,8 @@
         </div>
         <div class="skill-card reveal">
           <div class="skill-card-icon">🎨</div>
-          <div class="skill-card-title">UI/UX Dizayn</div>
-          <div class="skill-desc">Figma yordamida foydalanuvchi interfeyslari dizayni, prototiplash va foydalanuvchi tajribasi yechimlarini yaratish.</div>
+          <div class="skill-card-title" data-i18n="sk_ui">UI/UX Dizayn</div>
+          <div class="skill-desc" data-i18n="sk_ui_desc">Figma yordamida foydalanuvchi interfeyslari dizayni, prototiplash va foydalanuvchi tajribasi yechimlarini yaratish.</div>
           <div class="skill-tags">
             <span class="skill-tag">Figma</span>
             <span class="skill-tag">Prototip</span>
@@ -634,9 +629,9 @@
           </div>
         </div>
         <div class="skill-card reveal">
-          <div class="skill-card-icon">💻</div>
-          <div class="skill-card-title">Texnologiya</div>
-          <div class="skill-desc">Kompyuter ko'nikmalari kuchli yo'nalish. Dasturiy ta'minot, raqamli asboblar va texnologik yechimlarni tez o'zlashtirish.</div>
+          <div class="skill-card-icon"></div>
+          <div class="skill-card-title" data-i18n="sk_tech">Texnologiya</div>
+          <div class="skill-desc" data-i18n="sk_tech_desc">Kompyuter ko'nikmalari kuchli yo'nalish. Dasturiy ta'minot, raqamli asboblar va texnologik yechimlarni tez o'zlashtirish.</div>
           <div class="skill-tags">
             <span class="skill-tag">MS Office</span>
             <span class="skill-tag">HTML/CSS</span>
@@ -645,9 +640,9 @@
           </div>
         </div>
         <div class="skill-card reveal">
-          <div class="skill-card-icon">🔗</div>
-          <div class="skill-card-title">Kasbiy platforma</div>
-          <div class="skill-desc">LinkedIn va hh.uz platformalarida professional profil boshqaruvi, ish qidirish va tarmoq qurishda tajriba.</div>
+          <div class="skill-card-icon"></div>
+          <div class="skill-card-title" data-i18n="sk_prof">Kasbiy platforma</div>
+          <div class="skill-desc" data-i18n="sk_prof_desc">LinkedIn va hh.uz platformalarida professional profil boshqaruvi, ish qidirish va tarmoq qurishda tajriba.</div>
           <div class="skill-tags">
             <span class="skill-tag">LinkedIn</span>
             <span class="skill-tag">hh.uz</span>
@@ -660,8 +655,8 @@
     <!-- EDUCATION -->
     <section id="education">
       <div class="reveal">
-        <div class="section-label">// 03 — Ta'lim</div>
-        <h2 class="section-title">Akademik<br>yo'l xaritasi</h2>
+        <div class="section-label" data-i18n="edu_label">// 03 — Ta'lim</div>
+        <h2 class="section-title" data-i18n="edu_title">Akademik<br>yo'l xaritasi</h2>
       </div>
       <div class="timeline">
         <div class="timeline-item reveal">
@@ -671,33 +666,33 @@
             <div class="timeline-connector"></div>
           </div>
           <div class="timeline-content">
-            <div class="timeline-degree">Magistr — Suv ta'minoti muhandisligi tizimlari</div>
+            <div class="timeline-degree" data-i18n="edu_1_degree">Magistr — Suv ta'minoti muhandisligi tizimlari</div>
             <div class="timeline-school">TIQXMMI — Toshkent irrigatsiya va qishloq xo'jaligini mexanizatsiyalashtirish muhandislari instituti</div>
-            <div class="timeline-desc">Dissertatsiya: "G'uzor tumanidagi suv olish boshqaruv tizimini optimallashtirish" (Qashqadaryo viloyati). Hisob-kitoblar, stsenariy tahlili, amaliy yechimlar.</div>
+            <div class="timeline-desc" data-i18n="edu_1_desc">Dissertatsiya: "G'uzor tumanidagi suv olish boshqaruv tizimini optimallashtirish" (Qashqadaryo viloyati). Hisob-kitoblar, stsenariy tahlili, amaliy yechimlar.</div>
           </div>
         </div>
         <div class="timeline-item reveal">
-          <div class="timeline-year">Ilgari</div>
+          <div class="timeline-year" data-i18n="edu_2_year">Ilgari</div>
           <div class="timeline-line">
             <div class="timeline-dot"></div>
             <div class="timeline-connector"></div>
           </div>
           <div class="timeline-content">
-            <div class="timeline-degree">Bakalavr — Suv ta'minoti muhandisligi</div>
-            <div class="timeline-school">Oliy ta'lim muassasasi</div>
-            <div class="timeline-desc">Suv ta'minoti va kanalizatsiya tizimlari bo'yicha fundamental muhandislik ta'limi. Loyihalash, gidravlika va texnik asoslari.</div>
+            <div class="timeline-degree" data-i18n="edu_2_degree">Bakalavr — Suv ta'minoti muhandisligi</div>
+            <div class="timeline-school" data-i18n="edu_2_school">Oliy ta'lim muassasasi</div>
+            <div class="timeline-desc" data-i18n="edu_2_desc">Suv ta'minoti va kanalizatsiya tizimlari bo'yicha fundamental muhandislik ta'limi. Loyihalash, gidravlika va texnik asoslari.</div>
           </div>
         </div>
         <div class="timeline-item reveal">
-          <div class="timeline-year">Ilgari</div>
+          <div class="timeline-year" data-i18n="edu_3_year">Ilgari</div>
           <div class="timeline-line">
             <div class="timeline-dot"></div>
             <div class="timeline-connector"></div>
           </div>
           <div class="timeline-content">
-            <div class="timeline-degree">Diplom — Telekommunikatsiya texnologiyasi</div>
-            <div class="timeline-school">Kollej</div>
-            <div class="timeline-desc">Telekommunikatsiya va axborot texnologiyalari bo'yicha o'rta maxsus ta'lim. Texnologiyaga qiziqishning asosi.</div>
+            <div class="timeline-degree" data-i18n="edu_3_degree">Diplom — Telekommunikatsiya texnologiyasi</div>
+            <div class="timeline-school" data-i18n="edu_3_school">Kollej</div>
+            <div class="timeline-desc" data-i18n="edu_3_desc">Telekommunikatsiya va axborot texnologiyalari bo'yicha o'rta maxsus ta'lim. Texnologiyaga qiziqishning asosi.</div>
           </div>
         </div>
       </div>
@@ -706,45 +701,79 @@
     <!-- PROJECTS -->
     <section id="projects">
       <div class="reveal">
-        <div class="section-label">// 04 — Loyihalar</div>
-        <h2 class="section-title">Taniqli ish<br>va tadqiqotlar</h2>
+        <div class="section-label" data-i18n="proj_label">// 04 — Loyihalar</div>
+        <h2 class="section-title" data-i18n="proj_title">Taniqli ish<br>va tadqiqotlar</h2>
       </div>
       <div class="projects-grid">
         <div class="project-card reveal">
-          <div class="project-num">01 / Dissertatsiya</div>
-          <div class="project-title">G'uzor Suv Olish Tizimini Optimallashtirish</div>
-          <div class="project-desc">Qashqadaryo viloyatidagi G'uzor tumanining suv olish boshqaruv tizimini tahlil qilish va optimallashtirish bo'yicha to'liq magistrlik tadqiqoti. Haqiqiy ma'lumotlar, senariy tahlillari va amaliy tavsiyalar.</div>
+          <div class="project-num" data-i18n="proj_1_num">01 / Dissertatsiya</div>
+          <div class="project-title" data-i18n="proj_1_title">G'uzor Suv Olish Tizimini Optimallashtirish</div>
+          <div class="project-desc" data-i18n="proj_1_desc">Qashqadaryo viloyatidagi G'uzor tumanining suv olish boshqaruv tizimini tahlil qilish va optimallashtirish bo'yicha to'liq magistrlik tadqiqoti. Haqiqiy ma'lumotlar, senariy tahlillari va amaliy tavsiyalar.</div>
           <div class="project-footer">
             <div class="skill-tags">
-              <span class="skill-tag">Suv muhandisligi</span>
-              <span class="skill-tag">Tadqiqot</span>
+              <span class="skill-tag" data-i18n="tag_water_eng">Suv muhandisligi</span>
+              <span class="skill-tag" data-i18n="tag_research">Tadqiqot</span>
             </div>
-            <div class="project-status"><span class="status-dot"></span>Jarayonda</div>
+            <div class="project-status"><span class="status-dot"></span><span data-i18n="status_progress">Jarayonda</span></div>
           </div>
         </div>
         <div class="project-card reveal">
-          <div class="project-num">02 / Ma'lumotlar tahlili</div>
-          <div class="project-title">G'uzor Quduqlari Chuqurligi Tahlili</div>
-          <div class="project-desc">G'uzor tumanidagi quduqlar chuqurligi to'plami bo'yicha keng qamrovli ma'lumotlar tahlili va Excel vizualizatsiyasi. Tartibga solingan ma'lumot tozalash va statistik ko'rsatkichlar.</div>
+          <div class="project-num" data-i18n="proj_2_num">02 / Ma'lumotlar tahlili</div>
+          <div class="project-title" data-i18n="proj_2_title">G'uzor Quduqlari Chuqurligi Tahlili</div>
+          <div class="project-desc" data-i18n="proj_2_desc">G'uzor tumanidagi quduqlar chuqurligi to'plami bo'yicha keng qamrovli ma'lumotlar tahlili va Excel vizualizatsiyasi. Tartibga solingan ma'lumot tozalash va statistik ko'rsatkichlar.</div>
           <div class="project-footer">
             <div class="skill-tags">
               <span class="skill-tag">Excel</span>
-              <span class="skill-tag">Statistika</span>
+              <span class="skill-tag" data-i18n="tag_stats">Statistika</span>
             </div>
-            <div class="project-status"><span class="status-dot"></span>Yakunlandi</div>
+            <div class="project-status"><span class="status-dot"></span><span data-i18n="status_done">Yakunlandi</span></div>
           </div>
         </div>
         <div class="project-card reveal">
-          <div class="project-num">03 / O'rganish</div>
-          <div class="project-title">BIM & UI/UX Rivojlanish Yo'li</div>
-          <div class="project-desc">Revit (BIM) va Figma (UI/UX) bo'yicha tizimli o'rganish va amaliy mashqlar. Muhandislik bilimini raqamli kompetensiyalar bilan birlashtirish.</div>
+          <div class="project-num" data-i18n="proj_3_num">03 / O'rganish</div>
+          <div class="project-title" data-i18n="proj_3_title">BIM & UI/UX Rivojlanish Yo'li</div>
+          <div class="project-desc" data-i18n="proj_3_desc">Revit (BIM) va Figma (UI/UX) bo'yicha tizimli o'rganish va amaliy mashqlar. Muhandislik bilimini raqamli kompetensiyalar bilan birlashtirish.</div>
           <div class="project-footer">
             <div class="skill-tags">
               <span class="skill-tag">Revit</span>
               <span class="skill-tag">Figma</span>
             </div>
-            <div class="project-status"><span class="status-dot"></span>Davom etmoqda</div>
+            <div class="project-status"><span class="status-dot"></span><span data-i18n="status_ongoing">Davom etmoqda</span></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATES (New) -->
+    <section id="certificates">
+      <div class="reveal">
+        <div class="section-label" data-i18n="cert_label">// 06 — Sertifikatlar</div>
+        <h2 class="section-title" data-i18n="cert_title">Kurslar va<br>sertifikatlar</h2>
+      </div>
+      <div class="certs-grid">
+        <!-- Namuna 1 -->
+        <div class="cert-card reveal">
+          <div class="cert-title" data-i18n="cert_1_title">Python for Data Science</div>
+          <div class="cert-org">Coursera / IBM</div>
+          <div class="cert-date">2024</div>
+        </div>
+        <!-- Namuna 2 -->
+        <div class="cert-card reveal">
+          <div class="cert-title" data-i18n="cert_2_title">BIM Manager</div>
+          <div class="cert-org">Autodesk / Revit</div>
+          <div class="cert-date">2023</div>
+        </div>
+        <!-- Namuna 3 -->
+        <div class="cert-card reveal">
+          <div class="cert-title" data-i18n="cert_3_title">Advanced Excel</div>
+          <div class="cert-org">Udemy</div>
+          <div class="cert-date">2023</div>
+        </div>
+        <!-- Namuna 4 -->
+        <div class="cert-card reveal">
+          <div class="cert-title" data-i18n="cert_4_title">English Language (B2)</div>
+          <div class="cert-org">IELTS / CEFR</div>
+          <div class="cert-date">2022</div>
         </div>
       </div>
     </section>
@@ -752,9 +781,9 @@
     <!-- CONTACT -->
     <section id="contact">
       <div class="reveal">
-        <div class="section-label">// 05 — Aloqa</div>
-        <h2 class="section-title">Birgalikda<br>ishlaylik</h2>
-        <p style="color: var(--muted); margin: 1.5rem 0; max-width: 500px; margin-left: auto; margin-right: auto;">
+        <div class="section-label" data-i18n="contact_label">// 05 — Aloqa</div>
+        <h2 class="section-title" data-i18n="contact_title">Birgalikda<br>ishlaylik</h2>
+        <p style="color: var(--muted); margin: 1.5rem 0; max-width: 500px; margin-left: auto; margin-right: auto;" data-i18n="contact_desc">
           Muhandislik loyihalari, texnologik hamkorlik yoki ish takliflari bo'yicha bog'laning.
         </p>
         <a href="mailto:i_jumayev@tiiame.uz" class="contact-email">i_jumayev@tiiame.uz</a>
@@ -794,7 +823,7 @@
   </main>
 
   <footer>
-    <span>© 2026 Islom Jumayev</span>
+    <span>© 2025 Islom Jumayev</span>
     <span>Toshkent, O'zbekiston</span>
   </footer>
 
@@ -813,6 +842,160 @@
     // Stagger skill cards
     document.querySelectorAll('.skill-card').forEach((card, i) => {
       card.style.transitionDelay = `${i * 0.08}s`;
+    });
+
+    // ── DARK / LIGHT MODE ──
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Check saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      themeToggle.innerHTML = theme === 'dark' ? '☀️' : '';
+    }
+
+    // ── LANGUAGE SWITCHER ──
+    const langSelect = document.getElementById('langSelect');
+    const translations = {
+      uz: {
+        nav_about: "Haqimda", nav_skills: "Ko'nikmalar", nav_education: "Ta'lim", nav_projects: "Loyihalar", nav_certificates: "Sertifikatlar", nav_contact: "Aloqa",
+        hero_tag: "Muhandis · Texnolog · Tadqiqotchi",
+        hero_subtitle: "Suv ta'minoti muhandisligi bo'yicha magistr. Texnologiya, ma'lumotlar tahlili va raqamli yechimlar bilan suv infratuzilmasini zamonaviylashtiraman.",
+        hero_cta_projects: "Loyihalarni ko'rish", hero_cta_contact: "Bog'lanish",
+        stat_exp: "Yil tajriba", stat_edu: "Oliy ta'lim", stat_area: "Dissertatsiya hududi", stat_learn: "O'rganish ishtiyoqi",
+        about_label: "// 01 — Haqimda", about_title: "Muhandislik va<br>texnologiyani birlashtiruvchi",
+        about_p1: "Men <span>TIQXMMI (Toshkent irrigatsiya va qishloq xo'jaligini mexanizatsiyalashtirish muhandislari instituti)</span>da suv ta'minoti muhandisligi tizimlari yo'nalishi bo'yicha magistratura talabasi bo'lib, tez orada dissertatsiyamni yakunlayman.",
+        about_p2: "Texnologiyaga bo'lgan qiziqishim meni muhandislikdan tashqariga olib chiqdi — <span>BIM modellashtirish (Revit), UI/UX dizayn (Figma), Python va ma'lumotlar tahlili</span> sohalari meni o'ziga tortmoqda.",
+        about_p3: "G'uzor tumanidagi suv olish tizimini optimallashtirish bo'yicha magistrlik dissertatsiyam real ma'lumotlar va texnologik yechimlarni birlashtirgan amaliy tadqiqot hisoblanadi.",
+        hl_water: "Ichimlik suvi tizimlari", hl_water_desc: "Suv ta'minoti loyihalash, nasos stansiyalari, quvurlar tarmog'i hisob-kitoblari bo'yicha chuqur bilim.",
+        hl_tech: "Texnologiya & Dasturlash", hl_tech_desc: "Python, ma'lumotlar tahlili, Excel vizualizatsiya, va raqamli loyihalash asboblari.",
+        hl_learn: "Doimiy o'rganish", hl_learn_desc: "Shaxsiy rivojlanish, psixologiya, moliya va texnologiya sohalari bo'yicha keng kitobxon.",
+        hl_lang: "Ko'p tilli mutaxassis", hl_lang_desc: "O'zbek, Ingliz va Rus tillarida kasbiy muloqot va hujjatlashtirish tajribasi.",
+        skills_label: "// 02 — Ko'nikmalar", skills_title: "Texnik va kasbiy<br>qobiliyatlar",
+        sk_eng: "Muhandislik", sk_eng_desc: "Suv ta'minoti tarmoqlarini loyihalash, gidravlik hisob-kitoblar, suv olish inshoatlari, nasos stansiyalari va infratuzilma optimallashtirish.",
+        sk_data: "Ma'lumotlar tahlili", sk_data_desc: "Excel'da murakkab vizualizatsiya, ma'lumotlar tozalash va statistik tahlil. Python orqali avtomatlashtirilgan hisobotlar.",
+        sk_bim: "BIM Modellashtirish", sk_bim_desc: "Revit yordamida binolar va infratuzilma ob'ektlarining 3D modellari, qurilish hujjatlashtirish va koordinatsiya.",
+        sk_ui: "UI/UX Dizayn", sk_ui_desc: "Figma yordamida foydalanuvchi interfeyslari dizayni, prototiplash va foydalanuvchi tajribasi yechimlarini yaratish.",
+        sk_tech: "Texnologiya", sk_tech_desc: "Kompyuter ko'nikmalari kuchli yo'nalish. Dasturiy ta'minot, raqamli asboblar va texnologik yechimlarni tez o'zlashtirish.",
+        sk_prof: "Kasbiy platforma", sk_prof_desc: "LinkedIn va hh.uz platformalarida professional profil boshqaruvi, ish qidirish va tarmoq qurishda tajriba.",
+        edu_label: "// 03 — Ta'lim", edu_title: "Akademik<br>yo'l xaritasi",
+        edu_1_degree: "Magistr — Suv ta'minoti muhandisligi tizimlari",
+        edu_1_desc: "Dissertatsiya: \"G'uzor tumanidagi suv olish boshqaruv tizimini optimallashtirish\" (Qashqadaryo viloyati). Hisob-kitoblar, stsenariy tahlili, amaliy yechimlar.",
+        edu_2_year: "Ilgari", edu_2_degree: "Bakalavr — Suv ta'minoti muhandisligi", edu_2_school: "Oliy ta'lim muassasasi", edu_2_desc: "Suv ta'minoti va kanalizatsiya tizimlari bo'yicha fundamental muhandislik ta'limi. Loyihalash, gidravlika va texnik asoslari.",
+        edu_3_year: "Ilgari", edu_3_degree: "Diplom — Telekommunikatsiya texnologiyasi", edu_3_school: "Kollej", edu_3_desc: "Telekommunikatsiya va axborot texnologiyalari bo'yicha o'rta maxsus ta'lim. Texnologiyaga qiziqishning asosi.",
+        proj_label: "// 04 — Loyihalar", proj_title: "Taniqli ish<br>va tadqiqotlar",
+        proj_1_num: "01 / Dissertatsiya", proj_1_title: "G'uzor Suv Olish Tizimini Optimallashtirish", proj_1_desc: "Qashqadaryo viloyatidagi G'uzor tumanining suv olish boshqaruv tizimini tahlil qilish va optimallashtirish bo'yicha to'liq magistrlik tadqiqoti. Haqiqiy ma'lumotlar, senariy tahlillari va amaliy tavsiyalar.",
+        tag_water_eng: "Suv muhandisligi", tag_research: "Tadqiqot", status_progress: "Jarayonda",
+        proj_2_num: "02 / Ma'lumotlar tahlili", proj_2_title: "G'uzor Quduqlari Chuqurligi Tahlili", proj_2_desc: "G'uzor tumanidagi quduqlar chuqurligi to'plami bo'yicha keng qamrovli ma'lumotlar tahlili va Excel vizualizatsiyasi. Tartibga solingan ma'lumot tozalash va statistik ko'rsatkichlar.",
+        tag_stats: "Statistika", status_done: "Yakunlandi",
+        proj_3_num: "03 / O'rganish", proj_3_title: "BIM & UI/UX Rivojlanish Yo'li", proj_3_desc: "Revit (BIM) va Figma (UI/UX) bo'yicha tizimli o'rganish va amaliy mashqlar. Muhandislik bilimini raqamli kompetensiyalar bilan birlashtirish.",
+        status_ongoing: "Davom etmoqda",
+        cert_label: "// 06 — Sertifikatlar", cert_title: "Kurslar va<br>sertifikatlar",
+        cert_1_title: "Python for Data Science", cert_2_title: "BIM Manager", cert_3_title: "Advanced Excel", cert_4_title: "English Language (B2)",
+        contact_label: "// 05 — Aloqa", contact_title: "Birgalikda<br>ishlaylik",
+        contact_desc: "Muhandislik loyihalari, texnologik hamkorlik yoki ish takliflari bo'yicha bog'laning."
+      },
+      en: {
+        nav_about: "About", nav_skills: "Skills", nav_education: "Education", nav_projects: "Projects", nav_certificates: "Certificates", nav_contact: "Contact",
+        hero_tag: "Engineer · Technologist · Researcher",
+        hero_subtitle: "M.Sc. in Water Supply Engineering. Modernizing water infrastructure with technology, data analysis, and digital solutions.",
+        hero_cta_projects: "View Projects", hero_cta_contact: "Get in Touch",
+        stat_exp: "Years Experience", stat_edu: "Higher Education", stat_area: "Research Area", stat_learn: "Passion for Learning",
+        about_label: "// 01 — About", about_title: "Bridging Engineering<br>and Technology",
+        about_p1: "I am a Master's student at <span>TIQXMMI (Tashkent Institute of Irrigation and Agricultural Mechanization Engineers)</span> specializing in Water Supply Engineering Systems, soon to complete my dissertation.",
+        about_p2: "My passion for technology has taken me beyond engineering — I am drawn to <span>BIM modeling (Revit), UI/UX design (Figma), Python, and data analysis</span>.",
+        about_p3: "My Master's dissertation on optimizing water intake systems in the Guzor district is a practical research combining real data and technological solutions.",
+        hl_water: "Water Supply Systems", hl_water_desc: "Deep knowledge in water supply design, pumping stations, and pipe network calculations.",
+        hl_tech: "Technology & Programming", hl_tech_desc: "Python, data analysis, Excel visualization, and digital design tools.",
+        hl_learn: "Continuous Learning", hl_learn_desc: "Avid reader in personal development, psychology, finance, and technology.",
+        hl_lang: "Multilingual Specialist", hl_lang_desc: "Professional communication and documentation in Uzbek, English, and Russian.",
+        skills_label: "// 02 — Skills", skills_title: "Technical and Professional<br>Capabilities",
+        sk_eng: "Engineering", sk_eng_desc: "Designing water supply networks, hydraulic calculations, water intake structures, pumping stations, and infrastructure optimization.",
+        sk_data: "Data Analysis", sk_data_desc: "Complex visualization in Excel, data cleaning, and statistical analysis. Automated reporting via Python.",
+        sk_bim: "BIM Modeling", sk_bim_desc: "3D modeling of buildings and infrastructure using Revit, construction documentation, and coordination.",
+        sk_ui: "UI/UX Design", sk_ui_desc: "Designing user interfaces, prototyping, and creating user experience solutions with Figma.",
+        sk_tech: "Technology", sk_tech_desc: "Strong computer skills. Quick adaptation to software, digital tools, and technological solutions.",
+        sk_prof: "Professional Platforms", sk_prof_desc: "Experience in managing professional profiles on LinkedIn and hh.uz, job searching, and networking.",
+        edu_label: "// 03 — Education", edu_title: "Academic<br>Roadmap",
+        edu_1_degree: "M.Sc. — Water Supply Engineering Systems",
+        edu_1_desc: "Dissertation: \"Optimizing Water Intake Management Systems in Guzor District\" (Qashqadaryo region). Calculations, scenario analysis, practical solutions.",
+        edu_2_year: "Previous", edu_2_degree: "B.Sc. — Water Supply Engineering", edu_2_school: "Higher Education Institution", edu_2_desc: "Fundamental engineering education in water supply and sewage systems. Design, hydraulics, and technical basics.",
+        edu_3_year: "Previous", edu_3_degree: "Diploma — Telecommunication Technologies", edu_3_school: "College", edu_3_desc: "Secondary specialized education in telecommunications and IT. The foundation of my interest in technology.",
+        proj_label: "// 04 — Projects", proj_title: "Notable Work<br>and Research",
+        proj_1_num: "01 / Dissertation", proj_1_title: "Optimizing Guzor Water Intake System", proj_1_desc: "Full Master's research on analyzing and optimizing the water intake management system in Guzor district. Real data, scenario analysis, and practical recommendations.",
+        tag_water_eng: "Water Engineering", tag_research: "Research", status_progress: "In Progress",
+        proj_2_num: "02 / Data Analysis", proj_2_title: "Analysis of Guzor Well Depths", proj_2_desc: "Comprehensive data analysis and Excel visualization of well depth datasets in Guzor district. Structured data cleaning and statistical indicators.",
+        tag_stats: "Statistics", status_done: "Completed",
+        proj_3_num: "03 / Learning", proj_3_title: "BIM & UI/UX Development Path", proj_3_desc: "Systematic learning and practical exercises in Revit (BIM) and Figma (UI/UX). Combining engineering knowledge with digital competencies.",
+        status_ongoing: "Ongoing",
+        cert_label: "// 06 — Certificates", cert_title: "Courses and<br>Certificates",
+        cert_1_title: "Python for Data Science", cert_2_title: "BIM Manager", cert_3_title: "Advanced Excel", cert_4_title: "English Language (B2)",
+        contact_label: "// 05 — Contact", contact_title: "Let's Work<br>Together",
+        contact_desc: "Connect for engineering projects, technological collaboration, or job offers."
+      },
+      ru: {
+        nav_about: "Обо мне", nav_skills: "Навыки", nav_education: "Образование", nav_projects: "Проекты", nav_certificates: "Сертификаты", nav_contact: "Контакты",
+        hero_tag: "Инженер · Технолог · Исследователь",
+        hero_subtitle: "Магистр по водоснабжению. Модернизирую водную инфраструктуру с помощью технологий, анализа данных и цифровых решений.",
+        hero_cta_projects: "Смотреть проекты", hero_cta_contact: "Связаться",
+        stat_exp: "Лет опыта", stat_edu: "Высшее образование", stat_area: "Район диссертации", stat_learn: "Страсть к обучению",
+        about_label: "// 01 — Обо мне", about_title: "Объединяя инженерию<br>и технологии",
+        about_p1: "Я магистрант <span>ТИКХММИ (Ташкентский институт ирригации и механизации сельского хозяйства)</span> по специальности системы водоснабжения, скоро завершу диссертацию.",
+        about_p2: "Моя страсть к технологиям вывела меня за рамки инженерии — меня привлекают <span>BIM-моделирование (Revit), UI/UX дизайн (Figma), Python и анализ данных</span>.",
+        about_p3: "Моя магистерская диссертация по оптимизации систем водозабора в Гузарском районе — это практическое исследование, объединяющее реальные данные и технологические решения.",
+        hl_water: "Системы водоснабжения", hl_water_desc: "Глубокие знания в проектировании водоснабжения, насосных станций и расчетах трубопроводных сетей.",
+        hl_tech: "Технологии и программирование", hl_tech_desc: "Python, анализ данных, визуализация в Excel и инструменты цифрового проектирования.",
+        hl_learn: "Постоянное обучение", hl_learn_desc: "Широкий кругозор в личном развитии, психологии, финансах и технологиях.",
+        hl_lang: "Многоязычный специалист", hl_lang_desc: "Профессиональное общение и документация на узбекском, английском и русском языках.",
+        skills_label: "// 02 — Навыки", skills_title: "Технические и профессиональные<br>способности",
+        sk_eng: "Инженерия", sk_eng_desc: "Проектирование сетей водоснабжения, гидравлические расчеты, водозаборные сооружения, насосные станции и оптимизация инфраструктуры.",
+        sk_data: "Анализ данных", sk_data_desc: "Сложная визуализация в Excel, очистка данных и статистический анализ. Автоматизированные отчеты через Python.",
+        sk_bim: "BIM моделирование", sk_bim_desc: "3D моделирование зданий и инфраструктуры с помощью Revit, строительная документация и координация.",
+        sk_ui: "UI/UX Дизайн", sk_ui_desc: "Проектирование пользовательских интерфейсов, прототипирование и создание решений пользовательского опыта в Figma.",
+        sk_tech: "Технологии", sk_tech_desc: "Сильные компьютерные навыки. Быстрое освоение ПО, цифровых инструментов и технологических решений.",
+        sk_prof: "Профессиональные платформы", sk_prof_desc: "Опыт управления профессиональными профилями на LinkedIn и hh.uz, поиска работы и нетворкинга.",
+        edu_label: "// 03 — Образование", edu_title: "Академический<br>путь",
+        edu_1_degree: "Магистр — Системы водоснабжения",
+        edu_1_desc: "Диссертация: \"Оптимизация системы управления водозабором в Гузарском районе\" (Кашкадарьинская область). Расчеты, сценарный анализ, практические решения.",
+        edu_2_year: "Ранее", edu_2_degree: "Бакалавр — Водоснабжение", edu_2_school: "Высшее учебное заведение", edu_2_desc: "Фундаментальное инженерное образование в области водоснабжения и канализации. Проектирование, гидравлика и технические основы.",
+        edu_3_year: "Ранее", edu_3_degree: "Диплом — Телекоммуникационные технологии", edu_3_school: "Колледж", edu_3_desc: "Среднее специальное образование в области телекоммуникаций и ИТ. Основа интереса к технологиям.",
+        proj_label: "// 04 — Проекты", proj_title: "Известные работы<br>и исследования",
+        proj_1_num: "01 / Диссертация", proj_1_title: "Оптимизация водозабора Гузар", proj_1_desc: "Полное магистерское исследование по анализу и оптимизации системы управления водозабором в Гузарском районе. Реальные данные, сценарный анализ и практические рекомендации.",
+        tag_water_eng: "Водная инженерия", tag_research: "Исследование", status_progress: "В процессе",
+        proj_2_num: "02 / Анализ данных", proj_2_title: "Анализ глубины скважин Гузар", proj_2_desc: "Комплексный анализ данных и визуализация в Excel по наборам данных о глубине скважин в Гузарском районе. Структурированная очистка данных и статистические показатели.",
+        tag_stats: "Статистика", status_done: "Завершено",
+        proj_3_num: "03 / Обучение", proj_3_title: "Путь развития BIM & UI/UX", proj_3_desc: "Систематическое обучение и практические упражнения по Revit (BIM) и Figma (UI/UX). Объединение инженерных знаний с цифровыми компетенциями.",
+        status_ongoing: "Продолжается",
+        cert_label: "// 06 — Сертификаты", cert_title: "Курсы и<br>сертификаты",
+        cert_1_title: "Python для Data Science", cert_2_title: "BIM Менеджер", cert_3_title: "Продвинутый Excel", cert_4_title: "Английский язык (B2)",
+        contact_label: "// 05 — Контакты", contact_title: "Давайте работать<br>вместе",
+        contact_desc: "Свяжитесь со мной по вопросам инженерных проектов, технологического сотрудничества или предложений о работе."
+      }
+    };
+
+    langSelect.addEventListener('change', (e) => {
+      const lang = e.target.value;
+      const t = translations[lang];
+      if (!t) return;
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) {
+          el.innerHTML = t[key];
+        }
+      });
+      document.documentElement.lang = lang;
     });
   </script>
 </body>
