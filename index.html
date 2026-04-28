@@ -6,7 +6,7 @@
   <title>Islom — Muhandis & Texnolog</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   
-  <!-- 🔴 GOOGLE ANALYTICS O'RNI: Quyidagi skriptni o'zingiznikiga almashtiring -->
+  <!-- 🔴 GOOGLE ANALYTICS: O'zingizning G-XXXXXXX ID raqamingizni qo'ying -->
   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -14,7 +14,6 @@
     gtag('js', new Date());
     gtag('config', 'G-XXXXXXX');
   </script> -->
-  <!-- 🔴 GOOGLE ANALYTICS O'RNI TUGADI -->
 
   <style>
     :root {
@@ -28,7 +27,7 @@
       --highlight: #c8f5d8;
     }
 
-    /* Light Mode Variables */
+    /* Light Mode */
     [data-theme="light"] {
       --bg: #f5f9f6;
       --surface: #ffffff;
@@ -41,9 +40,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
@@ -53,302 +50,87 @@
       transition: background 0.3s, color 0.3s;
     }
 
-    /* ── Grain overlay ── */
+    /* Grain overlay */
     body::before {
-      content: '';
-      position: fixed; inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: url("image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.5;
+      pointer-events: none; z-index: 9999; opacity: 0.5;
     }
 
-    /* ── Animated gradient bg ── */
-    .bg-orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .bg-orb-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(61,220,132,0.07) 0%, transparent 70%);
-      top: -100px; right: -100px;
-      animation: orb1 12s ease-in-out infinite alternate;
-    }
-    .bg-orb-2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(61,220,132,0.05) 0%, transparent 70%);
-      bottom: 200px; left: -80px;
-      animation: orb2 15s ease-in-out infinite alternate;
-    }
+    /* Animated bg */
+    .bg-orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
+    .bg-orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(61,220,132,0.07) 0%, transparent 70%); top: -100px; right: -100px; animation: orb1 12s ease-in-out infinite alternate; }
+    .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(61,220,132,0.05) 0%, transparent 70%); bottom: 200px; left: -80px; animation: orb2 15s ease-in-out infinite alternate; }
     @keyframes orb1 { from { transform: translate(0,0) scale(1); } to { transform: translate(40px, 60px) scale(1.1); } }
     @keyframes orb2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-30px, -50px) scale(1.15); } }
 
-    /* ─ Nav ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 3rem;
-      background: rgba(10,15,13,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(10,15,13,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
     [data-theme="light"] nav { background: rgba(245,249,246,0.85); }
-
-    .nav-logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-    }
-
+    .nav-logo { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.1em; }
     .nav-center { display: flex; align-items: center; gap: 2rem; }
     .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      transition: color 0.2s;
-    }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
-
-    /* Controls (Theme + Lang) */
     .nav-controls { display: flex; align-items: center; gap: 1rem; }
-    
-    .theme-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.2s;
-    }
+    .theme-toggle { background: transparent; border: 1px solid var(--border); color: var(--text); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
     .theme-toggle:hover { border-color: var(--accent); }
-
-    .lang-select {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      outline: none;
-    }
+    .lang-select { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; cursor: pointer; outline: none; }
     .lang-select option { background: var(--surface); color: var(--text); }
 
-    /* ─ Sections wrapper ── */
+    /* Sections */
     main { position: relative; z-index: 1; }
     section { padding: 7rem 3rem; max-width: 1100px; margin: 0 auto; }
 
-    /* ── Hero ─ */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: 8rem;
-      max-width: 100%;
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
-    .hero-tag {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--accent);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      border: 1px solid rgba(61,220,132,0.3);
-      padding: 0.3rem 0.8rem;
-      border-radius: 2px;
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s forwards;
-    }
-    .hero-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(3.5rem, 9vw, 8rem);
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      color: var(--highlight);
-      opacity: 0;
-      animation: fadeUp 0.9s 0.4s forwards;
-    }
-    .hero-name em {
-      font-style: italic;
-      color: var(--accent);
-    }
-    .hero-subtitle {
-      margin-top: 1.8rem;
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 560px;
-      line-height: 1.75;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.6s forwards;
-    }
-    .hero-cta {
-      margin-top: 3rem;
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.8s forwards;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-      padding: 0.75rem 2rem;
-      border: none; cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: background 0.2s, transform 0.15s;
-      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
-    }
+    /* Hero */
+    #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 8rem; padding-left: 3rem; padding-right: 3rem; }
+    .hero-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; border: 1px solid rgba(61,220,132,0.3); padding: 0.3rem 0.8rem; border-radius: 2px; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+    .hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(3.5rem, 9vw, 8rem); line-height: 1.0; letter-spacing: -0.02em; color: var(--highlight); opacity: 0; animation: fadeUp 0.9s 0.4s forwards; }
+    .hero-name em { font-style: italic; color: var(--accent); }
+    .hero-subtitle { margin-top: 1.8rem; font-size: 1.1rem; color: var(--muted); max-width: 560px; line-height: 1.75; opacity: 0; animation: fadeUp 0.9s 0.6s forwards; }
+    .hero-cta { margin-top: 3rem; display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s 0.8s forwards; }
+    .btn-primary { background: var(--accent); color: var(--bg); padding: 0.75rem 2rem; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9rem; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-      padding: 0.75rem 2rem;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: border-color 0.2s, color 0.2s, transform 0.15s;
-    }
+    .btn-secondary { background: transparent; color: var(--text); padding: 0.75rem 2rem; border: 1px solid var(--border); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; text-decoration: none; display: inline-block; transition: border-color 0.2s, color 0.2s, transform 0.15s; }
     .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .hero-stats { margin-top: 5rem; display: flex; gap: 3rem; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 2.5rem; opacity: 0; animation: fadeUp 0.9s 1.0s forwards; }
+    .stat-num { font-family: 'Space Mono', monospace; font-size: 2rem; color: var(--accent); font-weight: 700; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Stats row */
-    .hero-stats {
-      margin-top: 5rem;
-      display: flex; gap: 3rem; flex-wrap: wrap;
-      border-top: 1px solid var(--border);
-      padding-top: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.9s 1.0s forwards;
-    }
-    .stat-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 2rem;
-      color: var(--accent);
-      font-weight: 700;
-    }
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 0.2rem;
-    }
+    /* Section labels */
+    .section-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); color: var(--highlight); line-height: 1.15; margin-bottom: 1.5rem; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Section label ── */
-    .section-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 1.2rem;
-    }
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--highlight);
-      line-height: 1.15;
-      margin-bottom: 1.5rem;
-    }
-
-    /* ── About ── */
+    /* About */
     #about { border-top: 1px solid var(--border); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-    .about-text p {
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 1rem;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
     .about-text p span { color: var(--text); }
     .about-highlights { display: flex; flex-direction: column; gap: 1rem; }
-    .highlight-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 1.4rem 1.6rem;
-      display: flex; align-items: flex-start; gap: 1rem;
-      transition: border-color 0.2s;
-    }
+    .highlight-card { background: var(--surface); border: 1px solid var(--border); padding: 1.4rem 1.6rem; display: flex; align-items: flex-start; gap: 1rem; transition: border-color 0.2s; }
     .highlight-card:hover { border-color: rgba(61,220,132,0.4); }
     .highlight-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
     .highlight-title { font-weight: 600; font-size: 0.9rem; color: var(--text); margin-bottom: 0.25rem; }
     .highlight-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
 
-    /* ── Skills ── */
+    /* Skills */
     #skills { border-top: 1px solid var(--border); }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .skill-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .skill-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .skill-card { background: var(--surface); border: 1px solid var(--border); padding: 2rem; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; }
+    .skill-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); opacity: 0; transition: opacity 0.3s; }
     .skill-card:hover { transform: translateY(-4px); border-color: rgba(61,220,132,0.3); }
     .skill-card:hover::before { opacity: 1; }
     .skill-card-icon { font-size: 2rem; margin-bottom: 1rem; }
     .skill-card-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.75rem; color: var(--highlight); }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-    .skill-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--accent);
-      border: 1px solid rgba(61,220,132,0.25);
-      padding: 0.2rem 0.6rem;
-      background: rgba(61,220,132,0.05);
-    }
+    .skill-tag { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--accent); border: 1px solid rgba(61,220,132,0.25); padding: 0.2rem 0.6rem; background: rgba(61,220,132,0.05); }
     .skill-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
 
-    /* ── Education ── */
+    /* Education */
     #education { border-top: 1px solid var(--border); }
     .timeline { margin-top: 3rem; display: flex; flex-direction: column; gap: 0; }
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 120px 1px 1fr;
-      gap: 0 2rem;
-      position: relative;
-    }
+    .timeline-item { display: grid; grid-template-columns: 120px 1px 1fr; gap: 0 2rem; position: relative; }
     .timeline-year { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--accent); padding-top: 0.3rem; text-align: right; }
     .timeline-line { display: flex; flex-direction: column; align-items: center; }
     .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 0.45rem; box-shadow: 0 0 0 4px rgba(61,220,132,0.15); }
@@ -359,23 +141,10 @@
     .timeline-school { font-size: 0.85rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem; }
     .timeline-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
 
-    /* ── Projects ── */
+    /* Projects */
     #projects { border-top: 1px solid var(--border); }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .project-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s, border-color 0.2s;
-      cursor: default;
-    }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .project-card { background: var(--surface); border: 1px solid var(--border); padding: 2rem; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; cursor: default; }
     .project-card:hover { transform: translateY(-4px); border-color: rgba(61,220,132,0.35); }
     .project-num { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: rgba(61,220,132,0.4); letter-spacing: 0.2em; margin-bottom: 1rem; }
     .project-title { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: var(--highlight); margin-bottom: 0.75rem; line-height: 1.2; }
@@ -385,80 +154,42 @@
     .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* ── CERTIFICATES (New) ── */
+    /* Certificates */
     #certificates { border-top: 1px solid var(--border); }
-    .certs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .cert-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      transition: transform 0.2s, border-color 0.2s;
-    }
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .cert-card { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; transition: transform 0.2s, border-color 0.2s; cursor: pointer; }
     .cert-card:hover { transform: translateY(-4px); border-color: rgba(61,220,132,0.3); }
     .cert-title { font-weight: 600; color: var(--text); font-size: 1rem; }
     .cert-org { color: var(--accent); font-size: 0.85rem; }
     .cert-date { color: var(--muted); font-size: 0.75rem; font-family: 'Space Mono', monospace; }
 
-    /* ── Contact ─ */
+    /* Contact */
     #contact { border-top: 1px solid var(--border); text-align: center; padding-bottom: 8rem; }
-    .contact-email {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.8rem, 4vw, 3.5rem);
-      color: var(--highlight);
-      text-decoration: none;
-      display: inline-block;
-      margin: 2rem 0;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .contact-email::after {
-      content: '';
-      position: absolute; bottom: -4px; left: 0; right: 0;
-      height: 1px; background: var(--accent); transform: scaleX(0); transition: transform 0.3s;
-    }
+    .contact-email { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 4vw, 3.5rem); color: var(--highlight); text-decoration: none; display: inline-block; margin: 2rem 0; position: relative; transition: color 0.2s; }
+    .contact-email::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--accent); transform: scaleX(0); transition: transform 0.3s; }
     .contact-email:hover { color: var(--accent); }
     .contact-email:hover::after { transform: scaleX(1); }
-
     .social-links { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
-    .social-link {
-      display: flex; align-items: center; gap: 0.5rem;
-      padding: 0.6rem 1.2rem;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.8rem; font-weight: 500;
-      transition: border-color 0.2s, color 0.2s;
-      white-space: nowrap;
-    }
+    .social-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border: 1px solid var(--border); color: var(--muted); text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: border-color 0.2s, color 0.2s; white-space: nowrap; }
     .social-link:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 3rem;
-      display: flex; justify-content: space-between; align-items: center;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-      max-width: 100%;
-    }
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); max-width: 100%; }
 
-    /* ── Scroll reveal ── */
+    /* Scroll reveal */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── Responsive ─ */
+    /* Modal (Certificate Popup) */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+    .modal-content { max-width: 90%; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.5); border: 2px solid var(--accent); object-fit: contain; }
+    .close-modal { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
+    .close-modal:hover { color: var(--accent); }
+
+    /* Responsive */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-center { display: none; } /* Mobile menu simplified */
+      .nav-center { display: none; }
       .nav-controls { margin-left: auto; }
       section { padding: 5rem 1.5rem; }
       #hero { padding-left: 1.5rem; padding-right: 1.5rem; }
@@ -468,50 +199,6 @@
       .social-links { gap: 0.75rem; }
       .social-link { padding: 0.5rem 1rem; font-size: 0.75rem; }
     }
-  /* ─ Certificate Modal (Popup) ── */
-.cert-card { cursor: pointer; transition: transform 0.2s; }
-.cert-card:hover { transform: scale(1.02); }
-
-.modal-overlay {
-  display: none;
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.85);
-  z-index: 2000;
-  justify-content: center; align-items: center;
-}
-.modal-content {
-  max-width: 90%; max-height: 90vh;
-  border-radius: 8px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.5);
-  border: 2px solid var(--accent);
-}
-.close-modal {
-  position: absolute; top: 20px; right: 30px;
-  color: #fff; font-size: 40px; font-weight: bold; cursor: pointer;
-  transition: color 0.2s;
-}
-.close-modal:hover { color: var(--accent); }
-  /* Certificate Modal */
-.cert-card { cursor: pointer; transition: transform 0.2s; }
-.cert-card:hover { transform: scale(1.02); }
-.modal-overlay {
-  display: none;
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.85);
-  z-index: 2000;
-  justify-content: center; align-items: center;
-}
-.modal-content {
-  max-width: 90%; max-height: 90vh;
-  border-radius: 8px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.5);
-  border: 2px solid var(--accent);
-}
-.close-modal {
-  position: absolute; top: 20px; right: 30px;
-  color: #fff; font-size: 40px; font-weight: bold; cursor: pointer;
-}
-.close-modal:hover { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -538,10 +225,7 @@
         <option value="en">EN</option>
         <option value="ru">RU</option>
       </select>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-        <!-- Sun/Moon icon will be injected by JS -->
-        ☀️
-      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">️</button>
     </div>
   </nav>
 
@@ -551,30 +235,16 @@
     <section id="hero">
       <div class="hero-tag" data-i18n="hero_tag">Muhandis · Texnolog · Tadqiqotchi</div>
       <h1 class="hero-name">Islom<br><em>Jumayev</em></h1>
-      <p class="hero-subtitle" data-i18n="hero_subtitle">
-        Suv ta'minoti muhandisligi bo'yicha magistr. Texnologiya, ma'lumotlar tahlili va raqamli yechimlar bilan suv infratuzilmasini zamonaviylashtiraman.
-      </p>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">Suv ta'minoti muhandisligi bo'yicha magistr. Texnologiya, ma'lumotlar tahlili va raqamli yechimlar bilan suv infratuzilmasini zamonaviylashtiraman.</p>
       <div class="hero-cta">
         <a href="#projects" class="btn-primary" data-i18n="hero_cta_projects">Loyihalarni ko'rish</a>
         <a href="#contact" class="btn-secondary" data-i18n="hero_cta_contact">Bog'lanish</a>
       </div>
       <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-num">5+</div>
-          <div class="stat-label" data-i18n="stat_exp">Yil tajriba</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">2</div>
-          <div class="stat-label" data-i18n="stat_edu">Oliy ta'lim</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">G'uzor</div>
-          <div class="stat-label" data-i18n="stat_area">Dissertatsiya hududi</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">∞</div>
-          <div class="stat-label" data-i18n="stat_learn">O'rganish ishtiyoqi</div>
-        </div>
+        <div class="stat-item"><div class="stat-num">5+</div><div class="stat-label" data-i18n="stat_exp">Yil tajriba</div></div>
+        <div class="stat-item"><div class="stat-num">2</div><div class="stat-label" data-i18n="stat_edu">Oliy ta'lim</div></div>
+        <div class="stat-item"><div class="stat-num">G'uzor</div><div class="stat-label" data-i18n="stat_area">Dissertatsiya hududi</div></div>
+        <div class="stat-item"><div class="stat-num">∞</div><div class="stat-label" data-i18n="stat_learn">O'rganish ishtiyoqi</div></div>
       </div>
     </section>
 
@@ -613,7 +283,7 @@
             </div>
           </div>
           <div class="highlight-card">
-            <div class="highlight-icon">🌐</div>
+            <div class="highlight-icon"></div>
             <div>
               <div class="highlight-title" data-i18n="hl_lang">Ko'p tilli mutaxassis</div>
               <div class="highlight-desc" data-i18n="hl_lang_desc">O'zbek, Ingliz va Rus tillarida kasbiy muloqot va hujjatlashtirish tajribasi.</div>
@@ -634,64 +304,37 @@
           <div class="skill-card-icon">⚙️</div>
           <div class="skill-card-title" data-i18n="sk_eng">Muhandislik</div>
           <div class="skill-desc" data-i18n="sk_eng_desc">Suv ta'minoti tarmoqlarini loyihalash, gidravlik hisob-kitoblar, suv olish inshoatlari, nasos stansiyalari va infratuzilma optimallashtirish.</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Gidravlika</span>
-            <span class="skill-tag">Suv taqsimoti</span>
-            <span class="skill-tag">AutoCAD</span>
-            <span class="skill-tag">Loyihalash</span>
-          </div>
+          <div class="skill-tags"><span class="skill-tag">Gidravlika</span><span class="skill-tag">Suv taqsimoti</span><span class="skill-tag">AutoCAD</span><span class="skill-tag">Loyihalash</span></div>
         </div>
         <div class="skill-card reveal">
           <div class="skill-card-icon">📊</div>
           <div class="skill-card-title" data-i18n="sk_data">Ma'lumotlar tahlili</div>
           <div class="skill-desc" data-i18n="sk_data_desc">Excel'da murakkab vizualizatsiya, ma'lumotlar tozalash va statistik tahlil. Python orqali avtomatlashtirilgan hisobotlar.</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Excel</span>
-            <span class="skill-tag">Statistika</span>
-            <span class="skill-tag">Vizualizatsiya</span>
-          </div>
+          <div class="skill-tags"><span class="skill-tag">Python</span><span class="skill-tag">Excel</span><span class="skill-tag">Statistika</span><span class="skill-tag">Vizualizatsiya</span></div>
         </div>
         <div class="skill-card reveal">
           <div class="skill-card-icon">🏗️</div>
           <div class="skill-card-title" data-i18n="sk_bim">BIM Modellashtirish</div>
           <div class="skill-desc" data-i18n="sk_bim_desc">Revit yordamida binolar va infratuzilma ob'ektlarining 3D modellari, qurilish hujjatlashtirish va koordinatsiya.</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Revit</span>
-            <span class="skill-tag">BIM</span>
-            <span class="skill-tag">3D Model</span>
-          </div>
+          <div class="skill-tags"><span class="skill-tag">Revit</span><span class="skill-tag">BIM</span><span class="skill-tag">3D Model</span></div>
         </div>
         <div class="skill-card reveal">
           <div class="skill-card-icon">🎨</div>
           <div class="skill-card-title" data-i18n="sk_ui">UI/UX Dizayn</div>
           <div class="skill-desc" data-i18n="sk_ui_desc">Figma yordamida foydalanuvchi interfeyslari dizayni, prototiplash va foydalanuvchi tajribasi yechimlarini yaratish.</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Figma</span>
-            <span class="skill-tag">Prototip</span>
-            <span class="skill-tag">UI Dizayn</span>
-          </div>
+          <div class="skill-tags"><span class="skill-tag">Figma</span><span class="skill-tag">Prototip</span><span class="skill-tag">UI Dizayn</span></div>
         </div>
         <div class="skill-card reveal">
           <div class="skill-card-icon"></div>
           <div class="skill-card-title" data-i18n="sk_tech">Texnologiya</div>
           <div class="skill-desc" data-i18n="sk_tech_desc">Kompyuter ko'nikmalari kuchli yo'nalish. Dasturiy ta'minot, raqamli asboblar va texnologik yechimlarni tez o'zlashtirish.</div>
-          <div class="skill-tags">
-            <span class="skill-tag">MS Office</span>
-            <span class="skill-tag">HTML/CSS</span>
-            <span class="skill-tag">AI Asboblar</span>
-            <span class="skill-tag">Linux</span>
-          </div>
+          <div class="skill-tags"><span class="skill-tag">MS Office</span><span class="skill-tag">HTML/CSS</span><span class="skill-tag">AI Asboblar</span><span class="skill-tag">Linux</span></div>
         </div>
         <div class="skill-card reveal">
           <div class="skill-card-icon"></div>
           <div class="skill-card-title" data-i18n="sk_prof">Kasbiy platforma</div>
           <div class="skill-desc" data-i18n="sk_prof_desc">LinkedIn va hh.uz platformalarida professional profil boshqaruvi, ish qidirish va tarmoq qurishda tajriba.</div>
-          <div class="skill-tags">
-            <span class="skill-tag">LinkedIn</span>
-            <span class="skill-tag">hh.uz</span>
-            <span class="skill-tag">Networking</span>
-          </div>
+          <div class="skill-tags"><span class="skill-tag">LinkedIn</span><span class="skill-tag">hh.uz</span><span class="skill-tag">Networking</span></div>
         </div>
       </div>
     </section>
@@ -705,10 +348,7 @@
       <div class="timeline">
         <div class="timeline-item reveal">
           <div class="timeline-year">2024–2026</div>
-          <div class="timeline-line">
-            <div class="timeline-dot"></div>
-            <div class="timeline-connector"></div>
-          </div>
+          <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
           <div class="timeline-content">
             <div class="timeline-degree" data-i18n="edu_1_degree">Magistr — Suv ta'minoti muhandisligi tizimlari</div>
             <div class="timeline-school">TIQXMMI — Toshkent irrigatsiya va qishloq xo'jaligini mexanizatsiyalashtirish muhandislari instituti</div>
@@ -717,10 +357,7 @@
         </div>
         <div class="timeline-item reveal">
           <div class="timeline-year" data-i18n="edu_2_year">Ilgari</div>
-          <div class="timeline-line">
-            <div class="timeline-dot"></div>
-            <div class="timeline-connector"></div>
-          </div>
+          <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
           <div class="timeline-content">
             <div class="timeline-degree" data-i18n="edu_2_degree">Bakalavr — Suv ta'minoti muhandisligi</div>
             <div class="timeline-school" data-i18n="edu_2_school">Oliy ta'lim muassasasi</div>
@@ -729,10 +366,7 @@
         </div>
         <div class="timeline-item reveal">
           <div class="timeline-year" data-i18n="edu_3_year">Ilgari</div>
-          <div class="timeline-line">
-            <div class="timeline-dot"></div>
-            <div class="timeline-connector"></div>
-          </div>
+          <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
           <div class="timeline-content">
             <div class="timeline-degree" data-i18n="edu_3_degree">Diplom — Telekommunikatsiya texnologiyasi</div>
             <div class="timeline-school" data-i18n="edu_3_school">Kollej</div>
@@ -754,10 +388,7 @@
           <div class="project-title" data-i18n="proj_1_title">G'uzor Suv Olish Tizimini Optimallashtirish</div>
           <div class="project-desc" data-i18n="proj_1_desc">Qashqadaryo viloyatidagi G'uzor tumanining suv olish boshqaruv tizimini tahlil qilish va optimallashtirish bo'yicha to'liq magistrlik tadqiqoti. Haqiqiy ma'lumotlar, senariy tahlillari va amaliy tavsiyalar.</div>
           <div class="project-footer">
-            <div class="skill-tags">
-              <span class="skill-tag" data-i18n="tag_water_eng">Suv muhandisligi</span>
-              <span class="skill-tag" data-i18n="tag_research">Tadqiqot</span>
-            </div>
+            <div class="skill-tags"><span class="skill-tag" data-i18n="tag_water_eng">Suv muhandisligi</span><span class="skill-tag" data-i18n="tag_research">Tadqiqot</span></div>
             <div class="project-status"><span class="status-dot"></span><span data-i18n="status_progress">Jarayonda</span></div>
           </div>
         </div>
@@ -766,10 +397,7 @@
           <div class="project-title" data-i18n="proj_2_title">G'uzor Quduqlari Chuqurligi Tahlili</div>
           <div class="project-desc" data-i18n="proj_2_desc">G'uzor tumanidagi quduqlar chuqurligi to'plami bo'yicha keng qamrovli ma'lumotlar tahlili va Excel vizualizatsiyasi. Tartibga solingan ma'lumot tozalash va statistik ko'rsatkichlar.</div>
           <div class="project-footer">
-            <div class="skill-tags">
-              <span class="skill-tag">Excel</span>
-              <span class="skill-tag" data-i18n="tag_stats">Statistika</span>
-            </div>
+            <div class="skill-tags"><span class="skill-tag">Excel</span><span class="skill-tag" data-i18n="tag_stats">Statistika</span></div>
             <div class="project-status"><span class="status-dot"></span><span data-i18n="status_done">Yakunlandi</span></div>
           </div>
         </div>
@@ -778,38 +406,31 @@
           <div class="project-title" data-i18n="proj_3_title">BIM & UI/UX Rivojlanish Yo'li</div>
           <div class="project-desc" data-i18n="proj_3_desc">Revit (BIM) va Figma (UI/UX) bo'yicha tizimli o'rganish va amaliy mashqlar. Muhandislik bilimini raqamli kompetensiyalar bilan birlashtirish.</div>
           <div class="project-footer">
-            <div class="skill-tags">
-              <span class="skill-tag">Revit</span>
-              <span class="skill-tag">Figma</span>
-            </div>
+            <div class="skill-tags"><span class="skill-tag">Revit</span><span class="skill-tag">Figma</span></div>
             <div class="project-status"><span class="status-dot"></span><span data-i18n="status_ongoing">Davom etmoqda</span></div>
           </div>
         </div>
       </div>
     </section>
 
-        <!-- CERTIFICATES (Yangilangan) -->
+    <!-- CERTIFICATES -->
     <section id="certificates">
       <div class="reveal">
         <div class="section-label" data-i18n="cert_label">// 06 — Sertifikatlar</div>
         <h2 class="section-title" data-i18n="cert_title">Kurslar va<br>sertifikatlar</h2>
       </div>
       <div class="certs-grid">
-        
-        <!-- 1-sertifikat -->
-<div class="cert-card reveal" onclick="openModal('sertifikat1.png')">
-  <div class="cert-title">Python for Data Science</div>
-  <div class="cert-org">Coursera / IBM</div>
-  <div class="cert-date">2024</div>
-</div>
-
-<!-- 2-sertifikat -->
-<div class="cert-card reveal" onclick="openModal('sertifikat2.png')">
-  <div class="cert-title">BIM Manager</div>
-  <div class="cert-org">Autodesk / Revit</div>
-  <div class="cert-date">2023</div>
-</div>
-
+        <div class="cert-card reveal" onclick="openModal('sertifikat1.png')">
+          <div class="cert-title">Python for Data Science</div>
+          <div class="cert-org">Coursera / IBM</div>
+          <div class="cert-date">2024</div>
+        </div>
+        <div class="cert-card reveal" onclick="openModal('sertifikat2.png')">
+          <div class="cert-title">BIM Manager</div>
+          <div class="cert-org">Autodesk / Revit</div>
+          <div class="cert-date">2023</div>
+        </div>
+        <!-- Yangi sertifikatlar uchun shu yerda qator qo'shishingiz mumkin -->
       </div>
     </section>
 
@@ -818,9 +439,7 @@
       <div class="reveal">
         <div class="section-label" data-i18n="contact_label">// 05 — Aloqa</div>
         <h2 class="section-title" data-i18n="contact_title">Birgalikda<br>ishlaylik</h2>
-        <p style="color: var(--muted); margin: 1.5rem 0; max-width: 500px; margin-left: auto; margin-right: auto;" data-i18n="contact_desc">
-          Muhandislik loyihalari, texnologik hamkorlik yoki ish takliflari bo'yicha bog'laning.
-        </p>
+        <p style="color: var(--muted); margin: 1.5rem 0; max-width: 500px; margin-left: auto; margin-right: auto;" data-i18n="contact_desc">Muhandislik loyihalari, texnologik hamkorlik yoki ish takliflari bo'yicha bog'laning.</p>
         <a href="mailto:i_jumayev@tiiame.uz" class="contact-email">i_jumayev@tiiame.uz</a>
         <div class="social-links">
           <a href="https://www.linkedin.com/in/islom-jumayev" target="_blank" rel="noopener" class="social-link">
@@ -862,51 +481,40 @@
     <span>Toshkent, O'zbekiston</span>
   </footer>
 
+  <!-- Modal Popup HTML -->
+  <div id="certModal" class="modal-overlay" onclick="closeModal()">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
   <script>
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-        }
-      });
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.skill-card').forEach((card, i) => { card.style.transitionDelay = `${i * 0.08}s`; });
 
-    // Stagger skill cards
-    document.querySelectorAll('.skill-card').forEach((card, i) => {
-      card.style.transitionDelay = `${i * 0.08}s`;
-    });
-
-    // ── DARK / LIGHT MODE ──
+    // Dark / Light Mode
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
-    
-    // Check saved theme
     const savedTheme = localStorage.getItem('theme') || 'dark';
     html.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
-
+    themeToggle.innerHTML = savedTheme === 'dark' ? '☀️' : '';
     themeToggle.addEventListener('click', () => {
       const current = html.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      updateThemeIcon(next);
+      themeToggle.innerHTML = next === 'dark' ? '☀️' : '';
     });
 
-    function updateThemeIcon(theme) {
-      themeToggle.innerHTML = theme === 'dark' ? '☀️' : '';
-    }
-
-    // ── LANGUAGE SWITCHER ──
+    // Language Switcher
     const langSelect = document.getElementById('langSelect');
     const translations = {
       uz: {
         nav_about: "Haqimda", nav_skills: "Ko'nikmalar", nav_education: "Ta'lim", nav_projects: "Loyihalar", nav_certificates: "Sertifikatlar", nav_contact: "Aloqa",
-        hero_tag: "Muhandis · Texnolog · Tadqiqotchi",
-        hero_subtitle: "Suv ta'minoti muhandisligi bo'yicha magistr. Texnologiya, ma'lumotlar tahlili va raqamli yechimlar bilan suv infratuzilmasini zamonaviylashtiraman.",
+        hero_tag: "Muhandis · Texnolog · Tadqiqotchi", hero_subtitle: "Suv ta'minoti muhandisligi bo'yicha magistr. Texnologiya, ma'lumotlar tahlili va raqamli yechimlar bilan suv infratuzilmasini zamonaviylashtiraman.",
         hero_cta_projects: "Loyihalarni ko'rish", hero_cta_contact: "Bog'lanish",
         stat_exp: "Yil tajriba", stat_edu: "Oliy ta'lim", stat_area: "Dissertatsiya hududi", stat_learn: "O'rganish ishtiyoqi",
         about_label: "// 01 — Haqimda", about_title: "Muhandislik va<br>texnologiyani birlashtiruvchi",
@@ -919,7 +527,7 @@
         hl_lang: "Ko'p tilli mutaxassis", hl_lang_desc: "O'zbek, Ingliz va Rus tillarida kasbiy muloqot va hujjatlashtirish tajribasi.",
         skills_label: "// 02 — Ko'nikmalar", skills_title: "Texnik va kasbiy<br>qobiliyatlar",
         sk_eng: "Muhandislik", sk_eng_desc: "Suv ta'minoti tarmoqlarini loyihalash, gidravlik hisob-kitoblar, suv olish inshoatlari, nasos stansiyalari va infratuzilma optimallashtirish.",
-        sk_data: "Ma'lumotlar tahlili", sk_data_desc: "Excel'da murakkab vizualizatsiya, ma'lumotlar tozalash va statistik tahlil. Python orqali avtomatlashtirilgan hisobotlar.",
+        sk_ "Ma'lumotlar tahlili", sk_data_desc: "Excel'da murakkab vizualizatsiya, ma'lumotlar tozalash va statistik tahlil. Python orqali avtomatlashtirilgan hisobotlar.",
         sk_bim: "BIM Modellashtirish", sk_bim_desc: "Revit yordamida binolar va infratuzilma ob'ektlarining 3D modellari, qurilish hujjatlashtirish va koordinatsiya.",
         sk_ui: "UI/UX Dizayn", sk_ui_desc: "Figma yordamida foydalanuvchi interfeyslari dizayni, prototiplash va foydalanuvchi tajribasi yechimlarini yaratish.",
         sk_tech: "Texnologiya", sk_tech_desc: "Kompyuter ko'nikmalari kuchli yo'nalish. Dasturiy ta'minot, raqamli asboblar va texnologik yechimlarni tez o'zlashtirish.",
@@ -937,14 +545,11 @@
         proj_3_num: "03 / O'rganish", proj_3_title: "BIM & UI/UX Rivojlanish Yo'li", proj_3_desc: "Revit (BIM) va Figma (UI/UX) bo'yicha tizimli o'rganish va amaliy mashqlar. Muhandislik bilimini raqamli kompetensiyalar bilan birlashtirish.",
         status_ongoing: "Davom etmoqda",
         cert_label: "// 06 — Sertifikatlar", cert_title: "Kurslar va<br>sertifikatlar",
-        cert_1_title: "Python for Data Science", cert_2_title: "BIM Manager", cert_3_title: "Advanced Excel", cert_4_title: "English Language (B2)",
-        contact_label: "// 05 — Aloqa", contact_title: "Birgalikda<br>ishlaylik",
-        contact_desc: "Muhandislik loyihalari, texnologik hamkorlik yoki ish takliflari bo'yicha bog'laning."
+        contact_label: "// 05 — Aloqa", contact_title: "Birgalikda<br>ishlaylik", contact_desc: "Muhandislik loyihalari, texnologik hamkorlik yoki ish takliflari bo'yicha bog'laning."
       },
       en: {
         nav_about: "About", nav_skills: "Skills", nav_education: "Education", nav_projects: "Projects", nav_certificates: "Certificates", nav_contact: "Contact",
-        hero_tag: "Engineer · Technologist · Researcher",
-        hero_subtitle: "M.Sc. in Water Supply Engineering. Modernizing water infrastructure with technology, data analysis, and digital solutions.",
+        hero_tag: "Engineer · Technologist · Researcher", hero_subtitle: "M.Sc. in Water Supply Engineering. Modernizing water infrastructure with technology, data analysis, and digital solutions.",
         hero_cta_projects: "View Projects", hero_cta_contact: "Get in Touch",
         stat_exp: "Years Experience", stat_edu: "Higher Education", stat_area: "Research Area", stat_learn: "Passion for Learning",
         about_label: "// 01 — About", about_title: "Bridging Engineering<br>and Technology",
@@ -957,7 +562,7 @@
         hl_lang: "Multilingual Specialist", hl_lang_desc: "Professional communication and documentation in Uzbek, English, and Russian.",
         skills_label: "// 02 — Skills", skills_title: "Technical and Professional<br>Capabilities",
         sk_eng: "Engineering", sk_eng_desc: "Designing water supply networks, hydraulic calculations, water intake structures, pumping stations, and infrastructure optimization.",
-        sk_data: "Data Analysis", sk_data_desc: "Complex visualization in Excel, data cleaning, and statistical analysis. Automated reporting via Python.",
+        sk_ "Data Analysis", sk_data_desc: "Complex visualization in Excel, data cleaning, and statistical analysis. Automated reporting via Python.",
         sk_bim: "BIM Modeling", sk_bim_desc: "3D modeling of buildings and infrastructure using Revit, construction documentation, and coordination.",
         sk_ui: "UI/UX Design", sk_ui_desc: "Designing user interfaces, prototyping, and creating user experience solutions with Figma.",
         sk_tech: "Technology", sk_tech_desc: "Strong computer skills. Quick adaptation to software, digital tools, and technological solutions.",
@@ -975,14 +580,11 @@
         proj_3_num: "03 / Learning", proj_3_title: "BIM & UI/UX Development Path", proj_3_desc: "Systematic learning and practical exercises in Revit (BIM) and Figma (UI/UX). Combining engineering knowledge with digital competencies.",
         status_ongoing: "Ongoing",
         cert_label: "// 06 — Certificates", cert_title: "Courses and<br>Certificates",
-        cert_1_title: "Python for Data Science", cert_2_title: "BIM Manager", cert_3_title: "Advanced Excel", cert_4_title: "English Language (B2)",
-        contact_label: "// 05 — Contact", contact_title: "Let's Work<br>Together",
-        contact_desc: "Connect for engineering projects, technological collaboration, or job offers."
+        contact_label: "// 05 — Contact", contact_title: "Let's Work<br>Together", contact_desc: "Connect for engineering projects, technological collaboration, or job offers."
       },
       ru: {
         nav_about: "Обо мне", nav_skills: "Навыки", nav_education: "Образование", nav_projects: "Проекты", nav_certificates: "Сертификаты", nav_contact: "Контакты",
-        hero_tag: "Инженер · Технолог · Исследователь",
-        hero_subtitle: "Магистр по водоснабжению. Модернизирую водную инфраструктуру с помощью технологий, анализа данных и цифровых решений.",
+        hero_tag: "Инженер · Технолог · Исследователь", hero_subtitle: "Магистр по водоснабжению. Модернизирую водную инфраструктуру с помощью технологий, анализа данных и цифровых решений.",
         hero_cta_projects: "Смотреть проекты", hero_cta_contact: "Связаться",
         stat_exp: "Лет опыта", stat_edu: "Высшее образование", stat_area: "Район диссертации", stat_learn: "Страсть к обучению",
         about_label: "// 01 — Обо мне", about_title: "Объединяя инженерию<br>и технологии",
@@ -995,7 +597,7 @@
         hl_lang: "Многоязычный специалист", hl_lang_desc: "Профессиональное общение и документация на узбекском, английском и русском языках.",
         skills_label: "// 02 — Навыки", skills_title: "Технические и профессиональные<br>способности",
         sk_eng: "Инженерия", sk_eng_desc: "Проектирование сетей водоснабжения, гидравлические расчеты, водозаборные сооружения, насосные станции и оптимизация инфраструктуры.",
-        sk_data: "Анализ данных", sk_data_desc: "Сложная визуализация в Excel, очистка данных и статистический анализ. Автоматизированные отчеты через Python.",
+        sk_ "Анализ данных", sk_data_desc: "Сложная визуализация в Excel, очистка данных и статистический анализ. Автоматизированные отчеты через Python.",
         sk_bim: "BIM моделирование", sk_bim_desc: "3D моделирование зданий и инфраструктуры с помощью Revit, строительная документация и координация.",
         sk_ui: "UI/UX Дизайн", sk_ui_desc: "Проектирование пользовательских интерфейсов, прототипирование и создание решений пользовательского опыта в Figma.",
         sk_tech: "Технологии", sk_tech_desc: "Сильные компьютерные навыки. Быстрое освоение ПО, цифровых инструментов и технологических решений.",
@@ -1013,9 +615,7 @@
         proj_3_num: "03 / Обучение", proj_3_title: "Путь развития BIM & UI/UX", proj_3_desc: "Систематическое обучение и практические упражнения по Revit (BIM) и Figma (UI/UX). Объединение инженерных знаний с цифровыми компетенциями.",
         status_ongoing: "Продолжается",
         cert_label: "// 06 — Сертификаты", cert_title: "Курсы и<br>сертификаты",
-        cert_1_title: "Python для Data Science", cert_2_title: "BIM Менеджер", cert_3_title: "Продвинутый Excel", cert_4_title: "Английский язык (B2)",
-        contact_label: "// 05 — Контакты", contact_title: "Давайте работать<br>вместе",
-        contact_desc: "Свяжитесь со мной по вопросам инженерных проектов, технологического сотрудничества или предложений о работе."
+        contact_label: "// 05 — Контакты", contact_title: "Давайте работать<br>вместе", contact_desc: "Свяжитесь со мной по вопросам инженерных проектов, технологического сотрудничества или предложений о работе."
       }
     };
 
@@ -1023,33 +623,24 @@
       const lang = e.target.value;
       const t = translations[lang];
       if (!t) return;
-      
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (t[key]) {
-          el.innerHTML = t[key];
-        }
+        if (t[key]) el.innerHTML = t[key];
       });
       document.documentElement.lang = lang;
     });
-  </script>
-  <!-- Modal Popup -->
-<div id="certModal" class="modal-overlay" onclick="closeModal()">
-  <span class="close-modal" onclick="closeModal()">&times;</span>
-  <img class="modal-content" id="modalImage">
-</div>
 
-<script>
-function openModal(imageName) {
-  document.getElementById('certModal').style.display = "flex";
-  document.getElementById('modalImage').src = imageName;
-}
-function closeModal() {
-  document.getElementById('certModal').style.display = "none";
-}
-document.addEventListener('keydown', function(event) {
-  if (event.key === "Escape") closeModal();
-});
-</script>
+    // Certificate Modal Functions
+    function openModal(imageName) {
+      document.getElementById('certModal').style.display = "flex";
+      document.getElementById('modalImage').src = imageName;
+    }
+    function closeModal() {
+      document.getElementById('certModal').style.display = "none";
+    }
+    document.addEventListener('keydown', function(event) {
+      if (event.key === "Escape") closeModal();
+    });
+  </script>
 </body>
 </html>
